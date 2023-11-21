@@ -1,0 +1,231 @@
+//
+//  ContentView.swift
+//  Quizz Exam
+//
+//  Created by rich clicpomme.com on 2023-11-21.
+//
+import SwiftUI
+
+struct Question: Identifiable {
+    let id = UUID()
+    let text: String
+    let options: [String]
+    let allowsMultipleAnswers: Bool
+    let correctAnswerIndices: [Int]
+}
+
+struct ContentView: View {
+    @State private var questions: [Question] = [
+        Question(text: "How many times can you enter your iPhone passcode wrong before your account is disabled?", options: ["Three", "Five", "Six", "Ten"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "When do you need your Passcode to Enable Face ID? Select Three.", options: ["You haven’t unlocked your phone in more than 2 days.", "You updated your phone", "After five attempts to recognize a face unsuccessfully.", "You haven’t unlocked the phone using a passcode for more than 6 and half days, and Face ID hasn’t been used in the last 4 hours.", "Your phone has been in sleep mode for the last 8 hours."], allowsMultipleAnswers: true, correctAnswerIndices: [0, 2, 3]),
+        Question(text: "How many times will Face ID attempt to recognize your face before asking for your passcode?", options: ["Three", "Five", "Seven", "Ten"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "How many fingerprints can you register to your iPad?", options: ["One", "Three", "Five", "Ten"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "How many fingerprints can you register to a single user on your Mac?", options: ["One", "Three", "Five", "Ten"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "What enables applications to be run on Apple silicon macs that were originally built for intel based macs?", options: ["Xcode", "Rhapsody", "Universal Binary", "Rosetta 2"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "What file system formats are available in Disk Utility on a Mac? Select Four.", options: ["APFS", "Mac OS Extended", "GFS", "ExFat", "NTFS", "MS-DOS (FAT)"], allowsMultipleAnswers: true, correctAnswerIndices: [0, 1, 3, 5]),
+        Question(text: "What is the feature that allows you to share your screen in Facetime?", options: ["Shareplay", "Stage Manager", "Sidecar", "Continuity Camera"], allowsMultipleAnswers: false, correctAnswerIndices: [0]),
+        Question(text: "Which option can you access to view the current activity of Apple Configurator for Mac?", options: ["Double-click the device and select Activity.", "From the Apple Configurator menu, choose View Activity.", "From the Apple Configurator menu bar, choose Window > Activity."], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "What is the feature on iPhone called where you can convert your physical SIM card to an eSIM?", options: ["eSIM Carrier Transfer", "eSIM Quick Transfer", "eSIM Swap.", "eSIM Transfer"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "How can you control who can discover your iPhone or iPad when it’s within AirDrop range?", options: ["Turn off AirDrop in Privacy settings.", "Set AirDrop to Contacts Only.", "Require a verification code from the other device in Password & Security settings."], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "What’s the first action you should try when an app is unresponsive?", options: ["Update iOS or iPadOS", "Force the app to quit and reopen it", "Contact the developer"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "If you need to sync data from iCloud to your Windows PC, what must you do?", options: ["Download the files and send them to your PC manually.", "Download iCloud on your PC and manually start the transfer.", "Download iCloud for Windows from the Microsoft Store.","Airdrop the files to your PC."], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "What can you do if you forget your iPhone passcode?", options: ["Use your Apple ID to get into your phone.", "Wait for the “forgot your passcode?” prompt to appear and follow the onscreen instructions.", "Put the phone in recovery mode and attempt to restore it in Apple Configurator.","Connect the phone to a mac and erase all content and settings."], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "Which iPad models is the Apple Pencil (2nd gen) compatible with? Select 4", options: ["iPad (9th gen)", "iPad Pro 11-inch (1st gen)", "iPad Pro 12.9 inch (3rd gen)", "iPad Air (3rd gen)", "iPad Air (4th gen)", "iPad mini (6th gen)"], allowsMultipleAnswers: true, correctAnswerIndices: [1, 2, 4, 5]),
+        Question(text: "Where are sysdiagnose log files located on iPhone?", options: ["Settings > Privacy & Security > Analytics & Improvements > Analytics Data", "Settings > Privacy > Analytics & Improvements > Share With App Developers", "Settings > Privacy > Tracking"], allowsMultipleAnswers: false, correctAnswerIndices: [0]),
+        Question(text: "How do you start up a Mac with Apple silicon in macOS Recovery?", options: ["With the Mac shut down, press and hold the power button until “Loading startup options” appears.", "Turn on or restart the Mac, then immediately press and hold the Shift key as it starts up.", "Turn on or restart the Mac, then immediately press and hold Command-R until the Apple logo appears."], allowsMultipleAnswers: false, correctAnswerIndices: [0]),
+        Question(text: "You’ve forgotten your login password or it’s locked from too many failed attempts to log in. What’s the alternative method to unlock FileVault and reset your password?", options: ["Call AppleCare to create a new account recovery key.", "Use iCloud Account Recovery.", "Create a new local recovery key."], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "Where do you go to tell if an iPad has an MDM solution installed?", options: ["General > Profiles & Device Management", "Privacy & Security > Analytics & Improvements", "Privacy & Security > Device Management", "General > VPN & Device Management"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "How to access Emergency SOS on your iPhone?", options: ["Press the home button 5 times quickly.", "Press and hold the volume button and swipe down on your screen.", " Press and hold the side button and one of the volume buttons until the Emergency SOS slider appears.", "Press and hold the side button until the Emergency SOS slider appears."], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "What other sharing settings may prevent Screen Sharing from being turned on?", options: ["Remote Management.", "Remote Login", "Media Sharing", "Remote Apple Events"], allowsMultipleAnswers: false, correctAnswerIndices: [0]),
+        Question(text: "What does Find My use to locate lost or missing devices?", options: ["Wi-Fi", "Bluetooth", "Cellular Data", "Built in trackers"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "What are two features of two-factor authentication for a personal Apple ID? Select two responses.", options: ["it ensures that only the account’s owner can access the account.", "it requires a special app on the trusted device.", "It can be accessed on trusted devices.", "It uses a four-digit passcode to access a user’s account.", "It doesn’t require the Apple ID password."], allowsMultipleAnswers: true, correctAnswerIndices: [0, 2]),
+        Question(text: "Which device can you use to unlock your Mac computer’s screen saver and approve authentication requests from macOS and other apps?", options: ["iPad", "iPhone", "Apple Watch", "HomePod"], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "You use Apple Watch 8 to track your physical activity and health metrics, but you have some trouble seeing the screen and using the watch controls. Which iPhone feature can you use to help you see and operate Apple Watch more easily?", options: ["Audio Descriptions", "Apple Watch Mirroring", "Ask Siri", "VoiceOver"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "Guillermo is a designer for ACME, Inc. He uses his 12.9-inch iPad Pro to create marketing materials and do color grading. Which iPadOS feature should Guillermo use to allow his 12.9-inch iPad Pro to accurately display colors for common color standards?", options: ["True Tone", "ColorSync", "Reference Mode", "Display Zoom"], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "What are three reasons that a warning icon might appear in the Security Recommendation window for a password in Passwords settings? Select three responses.", options: ["The password is reused on another website.", "It’s a commonly used password or it’s easily guessed.", "The password appeared in a data leak.", "The password hasn’t been updated in the last 90 days.", "You have multiple or duplicate passwords listed for the website."], allowsMultipleAnswers: true, correctAnswerIndices: [0, 1, 2]),
+        Question(text: "Which two types of Activation Lock are available to organizations? Select two", options: ["Organization", "User-based", "Device-based", "Individual-based", "Personal"], allowsMultipleAnswers: true, correctAnswerIndices: [0, 1]),
+        Question(text: "How do you reset the printing system from Printers & Scanners settings on a Mac?", options: ["Choose Printer Setup Utility > Reset printing system.", "Control-click the printer, then choose Reset Printing System from the shortcut menu.", "Select all the printers in the Printers list, then click Delete (—).", "Select all items, move them to the Trash, and refresh the screen."], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "Where in System Settings should you go to determine if her printers were configured manually or by an MDM solution?", options: ["General > Sharing > Printer Sharing", "Printers > Advanced", "Printers & Scanners > Advanced", "Privacy & Security > Profiles"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "ACME, Inc. wants all users to see mounted servers in the Finder by default. Which terminal command should you use to modify the Finder preferences to display mounted servers?", options: ["defaults cat com.apple.finder ShowMountedServersOnDesktop true", "defaults read com.apple.finder ShowMountedServersOnDesktop true", "defaults write com.apple.finder ShowMountedServersOnDesktop true", "defaults append ShowMountedServersOnDesktop com.apple.finder true"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "You‘re troubleshooting a third-party app that frequently quits on your Mac. You’ve determined that the issue occurs across all user accounts. What should be your next step in troubleshooting the app’s issue?", options: ["Create a new file.", "Remove the ~/Library/Preferenceslapplication name preference file", "Upgrade to the latest version of the app.", "Reinstall or upgrade macOS.", " Troubleshoot application preferences."], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "At what Wi-Fi signal level will trigger iPhone or iPad to search for a stronger Wi-Fi network?", options: ["-50 dBm", "-70 dBm", "-80 dBm", "-100 dBm"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "Which of the following IP address suggests there may be a problem with DHCP?", options: ["192.168.6.75", "10.31.209.58", "169.254.194.49", "172.25.143.2"], allowsMultipleAnswers: false, correctAnswerIndices: [2]),
+        Question(text: "How do you quit out of a man page in Terminal Mac?", options: ["esc", "less", "clear", "q"], allowsMultipleAnswers: false, correctAnswerIndices: [3]),
+        Question(text: "You are trying to connect a podcast mic to your mac. You go into Sounds, but the mic isn’t appearing an as option. Where else can you check to see if the mic is properly connected to your mac?", options: ["System Settings > Printers & Devices", "System Information > Hardware", "System Information > Devices", "System Settings > Hardware"], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "Where can you change the undo send delay setting on your iPad?", options: [" Settings > Mail > Accounts > Undo Send Delay", "Settings > Mail > Undo Send Delay", "General > Mail > Undo Send Delay", "Open your mail app then open settings and select Undo Send Delay."], allowsMultipleAnswers: false, correctAnswerIndices: [1]),
+        Question(text: "What should you use to troubleshoot macOS installation issues?", options: ["nstaller log", "Single user mode", "Apple Diagnostics", "macOS Recovery Assistant"], allowsMultipleAnswers: false, correctAnswerIndices: [0]),
+        Question(text: "In MacOS on APFS volumes, when are FileVault encryption keys generated? Select Three.", options: ["During user creation", "During the first login by a user on the Mac", "When a user is deleted", "Setting the first user’s password", "When a user turns on FileVault"], allowsMultipleAnswers: true, correctAnswerIndices: [0, 1, 3]),
+        Question(text: "What methods can you use to lock notes in the Notes app? Select Two.", options: [" Apple ID password", "Mac Login Password", "PIN", "Custom Notes Password", "Face ID"], allowsMultipleAnswers: true, correctAnswerIndices: [1, 4]),
+        Question(text: "Which iPads is the Apple Pencil 2nd gen compatible with? Select Four.", options: ["iPad Air (3rd gen)", " iPad Air (4 and 5 gen)", "iPad Pro 12.9 (3-4-5-6th gen and newer)", "iPad Pro 11 inch (1st 2nd 3rd and 4 gen)", "iPad Pro 12.9 inch (2nd gen)", " iPad Mini (6th gen)"], allowsMultipleAnswers: true, correctAnswerIndices: [1,2,3, 4]),
+        // Add more questions here
+    ]
+
+    @State private var currentQuestionIndex = 0
+    @State private var score = 0
+    @State private var showResult = false
+    @State private var isAnswerCorrect: Bool? = nil
+
+    var body: some View {
+        VStack {
+            if showResult {
+                ResultView(score: score, totalQuestions: questions.count, onRestart: restartQuiz)
+            } else {
+                QuestionView(question: questions[currentQuestionIndex], currentQuestionIndex: $currentQuestionIndex, onNextQuestion: onNextQuestion, isAnswerCorrect: $isAnswerCorrect)
+            }
+        }
+        .padding()
+    }
+
+    func onNextQuestion(_ selectedAnswerIndices: [Int]) {
+        let correctAnswerIndices = questions[currentQuestionIndex].correctAnswerIndices
+        if Set(selectedAnswerIndices) == Set(correctAnswerIndices) {
+            score += 1
+            isAnswerCorrect = true
+        } else {
+            isAnswerCorrect = false
+        }
+        
+        if currentQuestionIndex < questions.count - 1 {
+            currentQuestionIndex += 1
+            isAnswerCorrect = nil // Reset isAnswerCorrect when moving to the next question
+        } else {
+            showResult = true
+        }
+    }
+    
+    func restartQuiz() {
+        currentQuestionIndex = 0
+        score = 0
+        showResult = false
+        isAnswerCorrect = nil
+    }
+}
+
+struct QuestionView: View {
+    let question: Question
+    @Binding var currentQuestionIndex: Int // Pass currentQuestionIndex as a parameter
+    let onNextQuestion: ([Int]) -> Void
+    @Binding var isAnswerCorrect: Bool?
+    @State private var selectedAnswerIndices: [Int] = []
+
+    var body: some View {
+        VStack {
+            Text(question.text)
+                .font(.headline)
+                .padding()
+
+            if question.allowsMultipleAnswers {
+                Text("Select all that apply:")
+                    .font(.subheadline)
+                    .padding(.bottom)
+            }
+
+            ForEach(0..<question.options.count, id: \.self) { index in
+                Button(action: {
+                    if isAnswerCorrect == nil {
+                        if question.allowsMultipleAnswers {
+                            if selectedAnswerIndices.contains(index) {
+                                selectedAnswerIndices.removeAll(where: { $0 == index })
+                            } else {
+                                selectedAnswerIndices.append(index)
+                            }
+                        } else {
+                            selectedAnswerIndices = [index]
+                        }
+                    }
+                }) {
+                    Text(question.options[index])
+                        .foregroundColor(Color.white) // Change the text color to white
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(getButtonBackgroundColor(for: index))
+                        .cornerRadius(8)
+                        .padding(4)
+                }
+            }
+
+            if let isAnswerCorrect = isAnswerCorrect {
+                if !isAnswerCorrect {
+                    Text(getCorrectAnswer())
+                        .foregroundColor(.red)
+                        .padding(.top)
+                } else {
+                    Text("Correct answer!")
+                        .foregroundColor(.green)
+                        .padding(.top)
+                }
+
+                Button("Next Question") {
+                    onNextQuestion(selectedAnswerIndices)
+                    selectedAnswerIndices.removeAll()
+                }
+                .padding()
+                .disabled(isAnswerCorrect == nil) // Disable the button when no answer is submitted
+            } else {
+                Button("Submit Answer") {
+                    isAnswerCorrect = checkAnswer()
+                }
+                .padding()
+                .disabled(selectedAnswerIndices.isEmpty)
+            }
+        }
+    }
+
+    private func getButtonBackgroundColor(for index: Int) -> Color {
+        if isAnswerCorrect == nil {
+            return selectedAnswerIndices.contains(index) ? .blue : .gray.opacity(0.5)
+        } else if isAnswerCorrect! && question.correctAnswerIndices.contains(index) {
+            return .green
+        } else if !isAnswerCorrect! && question.correctAnswerIndices.contains(index) {
+            return .red
+        } else {
+            return .gray.opacity(0.5)
+        }
+    }
+
+    private func checkAnswer() -> Bool {
+        let correctAnswerIndices = question.correctAnswerIndices
+        return Set(selectedAnswerIndices) == Set(correctAnswerIndices)
+    }
+
+    private func getCorrectAnswer() -> String {
+        let correctAnswerOptions = question.correctAnswerIndices.map { question.options[$0] }
+        return "Correct Answer: " + correctAnswerOptions.joined(separator: ", ")
+    }
+}
+
+struct ResultView: View {
+    let score: Int
+    let totalQuestions: Int
+    let onRestart: () -> Void
+
+    var body: some View {
+        VStack {
+            Text("Quiz Completed!")
+                .font(.title)
+
+            Text("Score: \(score) / \(totalQuestions)")
+
+            if Double(score) / Double(totalQuestions) >= 0.8 {
+                Text("Congratulations, you passed!")
+                    .foregroundColor(.green)
+                    .font(.headline)
+            } else {
+                Text("Sorry, you didn't pass.")
+                    .foregroundColor(.red)
+                    .font(.headline)
+            }
+
+            Button("Restart Quiz") {
+                onRestart()
+            }
+            .padding()
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
